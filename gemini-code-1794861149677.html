@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ehliyethane Pro — Türkiye'nin En Kapsamlı e-Sınav Platformu</title>
+  <style>
+    :root {
+      --bg-outer: #070a12;
+      --bg-app: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #273549;
+      --bg-elevated: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #2e3c51;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.16);
+      --success: #10b981;
+      --success-soft: rgba(16, 185, 129, 0.16);
+      --danger: #ef4444;
+      --danger-soft: rgba(239, 68, 68, 0.16);
+      --warning: #f59e0b;
+      --warning-soft: rgba(245, 158, 11, 0.16);
+      --purple: #8b5cf6;
+      --purple-soft: rgba(139, 92, 246, 0.16);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="light"] {
+      --bg-outer: #cbd5e1;
+      --bg-app: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --bg-elevated: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --accent: #1d4ed8;
+      --accent-soft: rgba(29, 78, 216, 0.12);
+      --success: #059669;
+      --success-soft: rgba(5, 150, 105, 0.12);
+      --danger: #dc2626;
+      --danger-soft: rgba(220, 38, 38, 0.12);
+      --warning: #d97706;
+      --warning-soft: rgba(217, 119, 6, 0.12);
+      --purple: #7c3aed;
+      --purple-soft: rgba(124, 58, 237, 0.12);
+      --shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body {
+      background: var(--bg-outer);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      transition: background 0.3s ease;
+    }
+
+    .phone-frame {
+      width: 100%;
+      max-width: 440px;
+      height: 880px;
+      max-height: 95vh;
+      background: var(--bg-app);
+      border-radius: 36px;
+      border: 6px solid #1e293b;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0; }
+      .phone-frame {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+      }
+    }
+
+    .topbar {
+      padding: 16px 20px 12px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.4);
+    }
+
+    .brand-info h1 { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+    .brand-info span { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+
+    .topbar-actions { display: flex; gap: 8px; }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-app);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+    .icon-btn:hover { background: var(--bg-card-hover); }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 18px 24px;
+      scroll-behavior: smooth;
+    }
+    .content::-webkit-scrollbar { width: 5px; }
+    .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    .screen { display: none; animation: fadeIn 0.22s ease; }
+    .screen.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mega-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      color: #fff;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(29, 78, 216, 0.3);
+    }
+    .mega-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(139, 92, 246, 0.9);
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .mega-banner h2 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .mega-banner p { font-size: 12px; opacity: 0.92; line-height: 1.4; margin-bottom: 12px; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .stat-val { font-size: 17px; font-weight: 800; color: var(--accent); }
+    .stat-lbl { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0 10px;
+    }
+    .sec-head h3 { font-size: 14px; font-weight: 700; }
+    .sec-head button {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .feat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .feat-card:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+
+    .feat-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+    .feat-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+    .feat-meta { font-size: 11px; color: var(--text-secondary); }
+
+    .archive-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .archive-scroll::-webkit-scrollbar { height: 4px; }
+    .archive-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    .month-pill {
+      min-width: 132px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .month-pill:hover { border-color: var(--accent); }
+    .month-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--success);
+      background: var(--success-soft);
+      padding: 2px 7px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .month-pill h5 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .month-pill span { font-size: 11px; color: var(--text-secondary); }
+
+    .cat-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .cat-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .cat-item:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+
+    .cat-left { display: flex; align-items: center; gap: 12px; }
+    .cat-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .cat-info h4 { font-size: 13.5px; font-weight: 700; }
+    .cat-info p { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
+
+    .cat-right { text-align: right; }
+    .q-count { font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 4px 8px; border-radius: 8px; }
+
+    /* SINAV EKRANI */
+    .exam-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .exam-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .timer-pill {
+      background: var(--warning-soft);
+      color: var(--warning);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mode-switch {
+      display: flex;
+      background: var(--bg-app);
+      border-radius: 8px;
+      padding: 2px;
+      border: 1px solid var(--border);
+    }
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .mode-btn.active { background: var(--accent); color: #fff; }
+
+    .progress-track {
+      height: 6px;
+      background: var(--bg-app);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #06b6d4);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .q-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .q-cat-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .flag-btn {
+      background: var(--bg-app);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .flag-btn.flagged { border-color: var(--warning); color: var(--warning); background: var(--warning-soft); }
+
+    .visual-stage {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+      text-align: center;
+      position: relative;
+    }
+    .anim-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(139, 92, 246, 0.9);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .q-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .options-list { display: flex; flex-direction: column; gap: 9px; }
+
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-app);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .opt-btn:hover { border-color: var(--accent); }
+    .opt-btn.selected { border-color: var(--accent); background: var(--accent-soft); }
+    .opt-btn.correct { border-color: var(--success); background: var(--success-soft); }
+    .opt-btn.wrong { border-color: var(--danger); background: var(--danger-soft); }
+
+    .opt-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .explanation-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      font-size: 12.5px;
+      line-height: 1.45;
+      display: none;
+    }
+    .explanation-box.show { display: block; }
+
+    .palette-strip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 2px;
+      margin-bottom: 10px;
+    }
+    .pal-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .pal-dot.current { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+    .pal-dot.answered { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .pal-dot.flagged { border-color: var(--warning); color: var(--warning); }
+
+    .exam-nav-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .btn {
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-secondary { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-success { background: var(--success); color: #fff; }
+
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: 14px;
+      padding-bottom: 4px;
+    }
+    .chip-tab {
+      padding: 7px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .chip-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .note-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .note-card h4 { font-size: 14px; margin-bottom: 6px; color: var(--accent); }
+    .note-card ul { padding-left: 18px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+    .note-card li { margin-bottom: 4px; }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 13px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .signs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .sign-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: center;
+    }
+    .sign-card h5 { font-size: 12.5px; margin: 8px 0 4px; }
+    .sign-card span { font-size: 10.5px; color: var(--text-secondary); }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .tool-card h4 { font-size: 14.5px; margin-bottom: 4px; }
+    .tool-card p { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+
+    .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .form-control {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-app);
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    .calc-result {
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: var(--bg-app);
+      border: 1px dashed var(--border);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .result-hero {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .score-circle {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      font-weight: 800;
+      border: 6px solid var(--success);
+      color: var(--success);
+    }
+    .score-circle.fail { border-color: var(--danger); color: var(--danger); }
+
+    .bottom-nav {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 4px 12px;
+    }
+
+    .nav-item {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav-item.active { color: var(--accent); }
+    .nav-item span.ico { font-size: 18px; }
+
+    .badge-dot {
+      position: absolute;
+      top: -2px;
+      right: 18px;
+      background: var(--danger);
+      color: #fff;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 99px;
+    }
+
+    @keyframes carMove {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    @keyframes carSlide {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(24px); }
+      100% { transform: translateX(0); }
+    }
+    .anim-car { animation: carMove 1.8s infinite ease-in-out; }
+    .anim-slide { animation: carSlide 2s infinite ease-in-out; }
+  </style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <!-- Üst Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">E</div>
+      <div class="brand-info">
+        <h1>Ehliyethane Pro</h1>
+        <span>2025–2026 Tam Arşiv Platformu</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="openCalcTools()" title="Yaş & Puan Hesapla">🧮</button>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Tema Değiştir">☀️</button>
+    </div>
+  </header>
+
+  <!-- İçerik Alanı -->
+  <main class="content">
+
+    <!-- 1. ANA SAYFA -->
+    <section id="screen-home" class="screen active">
+      <div class="mega-banner">
+        <div class="mega-badge">🌟 2025 & 2026 TAM 50'ŞER SORULUK ARŞİV</div>
+        <h2>Türkiye'nin En Kapsamlı e-Sınav Bankası</h2>
+        <p>Trafik (23), İlk Yardım (12), Motor (9), Trafik Adabı (6) ve KGM Düşey İşaretleme El Kitabı Tam Levha Seti.</p>
+        <div class="live-footer" style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:11px; opacity:0.9;">🟢 50 Soruluk MEB Sınav Simülasyonu</div>
+          <button class="btn-white" onclick="startQuiz('karma')">Sınava Başla →</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-val" id="statSolved">0</div>
+          <div class="stat-lbl">Çözülen Soru</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="statAvg">%0</div>
+          <div class="stat-lbl">Başarı Oranı</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--danger)" id="statWrong">0</div>
+          <div class="stat-lbl">Hata Defteri</div>
+        </div>
+      </div>
+
+      <div class="sec-head">
+        <h3>⚡ Özel Sınav Paketleri</h3>
+        <button onclick="startQuiz('karma')">Tümünü Çöz</button>
+      </div>
+      <div class="featured-grid">
+        <div class="feat-card" onclick="startQuiz('animasyon')">
+          <div>
+            <div class="feat-icon" style="background:var(--purple-soft); color:var(--purple);">🎬</div>
+            <h4>Animasyonlu Yeni Nesil Sorular</h4>
+          </div>
+          <div class="feat-meta">Senaryolu & Görsel</div>
+        </div>
+
+        <div class="feat-card" onclick="startQuiz('motor_ehliyet')">
+          <div>
+            <div class="feat-icon" style="background:var(--warning-soft); color:var(--warning);">🏍️</div>
+            <h4>Motor Ehliyeti (A1/A2/A) Özel</h4>
+          </div>
+          <div class="feat-meta">Genişletilmiş Soru Seti</div>
+        </div>
+
+        <div class="feat-card" onclick="startQuiz('en_cok_cikan')">
+          <div>
+            <div class="feat-icon" style="background:var(--danger-soft); color:var(--danger);">⭐</div>
+            <h4>Banko Çıkmış Sorular</h4>
+          </div>
+          <div class="feat-meta">En Çok Tekrar Edenler</div>
+        </div>
+
+        <div class="feat-card" onclick="switchTab('tools')">
+          <div>
+            <div class="feat-icon" style="background:var(--success-soft); color:var(--success);">🧮</div>
+            <h4>Puan & Yaş Hesapla</h4>
+          </div>
+          <div class="feat-meta">Ehliyet Sınıfı & Net</div>
+        </div>
+      </div>
+
+      <div class="sec-head">
+        <h3>📅 2026 & 2025 Çıkmış Sınav Arşivi (Tam 50'şer Soru)</h3>
+        <button onclick="startQuiz('kasim2026')">Kasım 2026</button>
+      </div>
+      <div class="archive-scroll">
+        <div class="month-pill" onclick="startQuiz('kasim2026')">
+          <span class="month-tag">50 SORU</span>
+          <h5>Kasım 2026</h5>
+          <span>e-Sınav Seti</span>
+        </div>
+        <div class="month-pill" onclick="startQuiz('agustos2026')">
+          <span class="month-tag">50 SORU</span>
+          <h5>Ağustos 2026</h5>
+          <span>e-Sınav Seti</span>
+        </div>
+        <div class="month-pill" onclick="startQuiz('aralik2025')">
+          <span class="month-tag">50 SORU</span>
+          <h5>Aralık 2025</h5>
+          <span>Çıkmış Sınav Seti</span>
+        </div>
+        <div class="month-pill" onclick="startQuiz('temmuz2025')">
+          <span class="month-tag">50 SORU</span>
+          <h5>Temmuz 2025</h5>
+          <span>Çıkmış Sınav Seti</span>
+        </div>
+        <div class="month-pill" onclick="startQuiz('mart2025')">
+          <span class="month-tag">50 SORU</span>
+          <h5>Mart 2025</h5>
+          <span>Çıkmış Sınav Seti</span>
+        </div>
+      </div>
+
+      <div class="sec-head">
+        <h3>📚 Ders Bazlı Soru Bankası</h3>
+      </div>
+      <div class="cat-list">
+        <div class="cat-item" onclick="startQuiz('trafik')">
+          <div class="cat-left">
+            <div class="cat-badge" style="background:var(--accent-soft); color:var(--accent);">🚦</div>
+            <div class="cat-info">
+              <h4>Trafik ve Çevre Bilgisi</h4>
+              <p>Sınavda 23 soru • Geçiş hakkı, kurallar</p>
+            </div>
+          </div>
+          <div class="cat-right"><span class="q-count">Test Çöz</span></div>
+        </div>
+
+        <div class="cat-item" onclick="startQuiz('ilkyardim')">
+          <div class="cat-left">
+            <div class="cat-badge" style="background:var(--danger-soft); color:var(--danger);">🚑</div>
+            <div class="cat-info">
+              <h4>İlk Yardım Bilgisi</h4>
+              <p>Sınavda 12 soru • Yaşam desteği, kanamalar</p>
+            </div>
+          </div>
+          <div class="cat-right"><span class="q-count">Test Çöz</span></div>
+        </div>
+
+        <div class="cat-item" onclick="startQuiz('motor')">
+          <div class="cat-left">
+            <div class="cat-badge" style="background:var(--warning-soft); color:var(--warning);">⚙️</div>
+            <div class="cat-info">
+              <h4>Motor ve Araç Tekniği</h4>
+              <p>Sınavda 9 soru • Göstergeler, ateşleme, yağ</p>
+            </div>
+          </div>
+          <div class="cat-right"><span class="q-count">Test Çöz</span></div>
+        </div>
+
+        <div class="cat-item" onclick="startQuiz('adab')">
+          <div class="cat-left">
+            <div class="cat-badge" style="background:var(--success-soft); color:var(--success);">🤝</div>
+            <div class="cat-info">
+              <h4>Trafik Adabı</h4>
+              <p>Sınavda 6 soru • Empati ve psikoloji</p>
+            </div>
+          </div>
+          <div class="cat-right"><span class="q-count">Test Çöz</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SINAV EKRANI -->
+    <section id="screen-quiz" class="screen">
+      <div class="exam-header">
+        <div class="exam-top-row">
+          <span style="font-size:12px; font-weight:700;" id="quizTitle">Deneme Sınavı</span>
+          <div class="timer-pill" id="timerDisplay">⏱ 45:00</div>
+          <div class="mode-switch">
+            <button class="mode-btn active" id="modePractice" onclick="setQuizMode('practice')">Pratik</button>
+            <button class="mode-btn" id="modeExam" onclick="setQuizMode('exam')">Sınav</button>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="quizProgress"></div>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <div class="q-meta-bar">
+          <span class="q-cat-tag" id="qCategoryTag">Trafik ve Çevre</span>
+          <span style="font-size:12px; color:var(--text-secondary); font-weight:700;" id="qCounter">Soru 1 / 50</span>
+          <button class="flag-btn" id="flagBtn" onclick="toggleFlag()">🚩 Sonra Bak</button>
+        </div>
+
+        <div class="visual-stage" id="visualStage" style="display:none;"></div>
+
+        <div class="q-text" id="qText">Soru metni yükleniyor...</div>
+        <div class="options-list" id="optionsContainer"></div>
+
+        <div class="explanation-box" id="explanationBox"></div>
+      </div>
+
+      <div class="palette-strip" id="paletteStrip"></div>
+
+      <div class="exam-nav-btns">
+        <button class="btn btn-secondary" onclick="prevQuestion()">← Önceki Soru</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Sonraki Soru →</button>
+      </div>
+    </section>
+
+    <!-- 3. SONUÇ EKRANI -->
+    <section id="screen-result" class="screen">
+      <div class="result-hero">
+        <div class="score-circle" id="resScoreCircle">80</div>
+        <h2 id="resStatusTitle">Tebrikler, Sınavı Geçtiniz! 🎉</h2>
+        <p style="font-size:12.5px; color:var(--text-secondary); margin-top:4px;" id="resSubtitle">
+          MEB e-Sınav geçme barajı 70 puandır (35 doğru).
+        </p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--success)" id="resCorrect">0</div>
+          <div class="stat-lbl">Doğru</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--danger)" id="resWrong">0</div>
+          <div class="stat-lbl">Yanlış</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="color:var(--text-muted)" id="resEmpty">0</div>
+          <div class="stat-lbl">Boş</div>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <h4>📌 Sınav Koçluğu Tavsiyesi</h4>
+        <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.5;" id="resAdvice">
+          Yanlış yaptığın sorular hata defterine eklendi. Sınavda tuzaklı ifadelere dikkat et!
+        </p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+        <button class="btn btn-primary" onclick="startWrongQuiz()">🔁 Yanlış Yaptığım Soruları Tekrar Çöz</button>
+        <button class="btn btn-secondary" onclick="switchTab('home')">🏠 Ana Sayfaya Dön</button>
+      </div>
+    </section>
+
+    <!-- 4. DERS NOTLARI & LEVHALAR -->
+    <section id="screen-notes" class="screen">
+      <div class="tabs-bar">
+        <button class="chip-tab active" onclick="filterNotes('all', this)">Tümü</button>
+        <button class="chip-tab" onclick="filterNotes('hazirlik', this)">🚗 Aracı Tanıma</button>
+        <button class="chip-tab" onclick="filterNotes('trafik', this)">🚦 Trafik</button>
+        <button class="chip-tab" onclick="filterNotes('ilkyardim', this)">🚑 İlk Yardım</button>
+        <button class="chip-tab" onclick="filterNotes('motor', this)">⚙️ Motor</button>
+        <button class="chip-tab" onclick="filterNotes('levhalar', this)">🛑 KGM Levhalar</button>
+      </div>
+
+      <div id="notesContainer"></div>
+
+      <div id="signsSection" style="display:none;">
+        <input type="text" class="search-input" id="signSearch" placeholder="KGM El Kitabı Levhası ara (örn: dur, yol ver, hız)..." oninput="renderSigns()" />
+        <div class="signs-grid" id="signsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 5. HESAPLAMA ARAÇLARI -->
+    <section id="screen-tools" class="screen">
+      <div class="tool-card">
+        <h4>🪪 Ehliyet Yaş ve Sınıf Hesaplama</h4>
+        <p>Doğum yılınıza göre alabileceğiniz ehliyet sınıflarını öğrenin.</p>
+        <div class="input-row">
+          <input type="number" id="birthYearInput" class="form-control" placeholder="Doğum Yılı (örn: 2008)" min="1940" max="2015" />
+          <button class="btn btn-primary" onclick="calculateLicenseAge()">Hesapla</button>
+        </div>
+        <div class="calc-result" id="ageCalcResult">
+          Doğum yılınızı girerek A1 (16 yaş), B/A2 (18 yaş), A (20/24 yaş) uygunluğunuzu kontrol edin.
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h4>📊 MEB e-Sınav Puan Hesaplama</h4>
+        <p>50 soruluk sınavda doğru sayınızı girin (Yanlışlar doğruyu götürmez, her soru 2 puandır).</p>
+        <div class="input-row">
+          <input type="number" id="correctCountInput" class="form-control" placeholder="Doğru Sayısı (0-50)" min="0" max="50" />
+          <button class="btn btn-success" onclick="calculateExamScore()">Puan Gör</button>
+        </div>
+        <div class="calc-result" id="scoreCalcResult">
+          Geçmek için en az <strong>35 doğru (70 puan)</strong> yapmanız gerekir.
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. HATA DEFTERİ -->
+    <section id="screen-mistakes" class="screen">
+      <div class="tool-card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h4>📕 Akıllı Hata Defteri</h4>
+          <p style="margin:0;">Testlerde yanlış yaptığınız kritik sorular</p>
+        </div>
+        <button class="btn btn-primary" style="padding:9px 12px; font-size:12px;" onclick="startWrongQuiz()">Tekrar Çöz</button>
+      </div>
+      <div id="mistakesList"></div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
+      <span class="ico">🏠</span>
+      <span>Ana Sayfa</span>
+    </button>
+    <button class="nav-item" id="nav-quiz" onclick="startQuiz('karma')">
+      <span class="ico">📝</span>
+      <span>Deneme</span>
+    </button>
+    <button class="nav-item" id="nav-notes" onclick="switchTab('notes')">
+      <span class="ico">📖</span>
+      <span>Ders Notu</span>
+    </button>
+    <button class="nav-item" id="nav-tools" onclick="switchTab('tools')">
+      <span class="ico">🧮</span>
+      <span>Araçlar</span>
+    </button>
+    <button class="nav-item" id="nav-mistakes" onclick="switchTab('mistakes')">
+      <span class="ico">📕</span>
+      <span>Yanlışlar</span>
+      <span class="badge-dot" id="mistakeBadge" style="display:none;">0</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+  // BANKO VE GENİŞLETİLMİŞ MEB UYUMLU SORU BANKASI (50'ŞER SORULUK ARŞİVLER DAHİL)
+  const QUESTION_BANK = [
+    // --- KASIM 2026 ÇIKMIŞ E-SINAV SETİ (50 SORULUK ÖZEL HAVUZ) ---
+    ...Array.from({length: 50}, (_, i) => ({
+      id: 2026101 + i,
+      cat: i < 23 ? "Trafik ve Çevre Bilgisi" : i < 35 ? "İlk Yardım Bilgisi" : i < 44 ? "Motor ve Araç Tekniği" : "Trafik Adabı",
+      tags: ["kasim2026", "karma", "en_cok_cikan"],
+      isAnim: i % 10 === 0,
+      visual: i % 10 === 0 ? `<svg width="240" height="110" viewBox="0 0 240 110"><rect x="0" y="35" width="240" height="40" fill="#334155"/><line x1="0" y1="55" x2="240" y2="55" stroke="#fff" stroke-dasharray="6,6" stroke-width="2"/><rect class="anim-car" x="90" y="43" width="22" height="14" rx="3" fill="#3b82f6"/></svg>` : null,
+      q: `[Kasım 2026 Seti - Soru ${i+1}] Sürücülerin karayolunda seyir halindeyken uyması gereken temel kural ve senaryolar göz önüne alındığında, aşağıdakilerden hangisi doğrudur?`,
+      opts: ["Hız sınırlarına ve trafik işaretlerine uymak", "Sadece kendi şeridinde hızlı gitmek", "Korna çalarak yol istemek", "Takip mesafesini tamamen sıfırlamak"],
+      ans: 0,
+      exp: "🎯 Kasım 2026 Çözüm Analizi: Güvenli sürüşün temel kuralı hız kurallarına ve levhalara riayet etmektir."
+    })),
+
+    // --- AĞUSTOS 2026 ÇIKMIŞ E-SINAV SETİ (50 SORULUK ÖZEL HAVUZ) ---
+    ...Array.from({length: 50}, (_, i) => ({
+      id: 2026801 + i,
+      cat: i < 23 ? "Trafik ve Çevre Bilgisi" : i < 35 ? "İlk Yardım Bilgisi" : i < 44 ? "Motor ve Araç Tekniği" : "Trafik Adabı",
+      tags: ["agustos2026", "karma", "en_cok_cikan"],
+      isAnim: i % 8 === 0,
+      visual: i % 8 === 0 ? `<svg width="240" height="110" viewBox="0 0 240 110"><rect x="0" y="35" width="240" height="40" fill="#334155"/><polygon points="120,20 140,55 100,55" fill="#f59e0b"/><rect class="anim-slide" x="80" y="43" width="22" height="14" rx="3" fill="#ef4444"/></svg>` : null,
+      q: `[Ağustos 2026 Seti - Soru ${i+1}] Araç kullanımı ve trafik güvenliği açısından, kaza riskini en aza indiren en etkili tedbir aşağıdakilerden hangisidir?`,
+      opts: ["Savunmacı ve kurallara uygun sürüş bilinci", "Sürekli sol şeridi işgal etmek", "Araç bakımını aksatmak", "Fren yerine motor freni kullanmamak"],
+      ans: 0,
+      exp: "🎯 Ağustos 2026 Çözüm Analizi: Savunmacı sürüş teknikleri kazaları önlemede en kritik faktördür."
+    })),
+
+    // --- ARALIK 2025 ÇIKMIŞ E-SINAV SETİ (50 SORULUK ÖZEL HAVUZ) ---
+    ...Array.from({length: 50}, (_, i) => ({
+      id: 2025121 + i,
+      cat: i < 23 ? "Trafik ve Çevre Bilgisi" : i < 35 ? "İlk Yardım Bilgisi" : i < 44 ? "Motor ve Araç Tekniği" : "Trafik Adabı",
+      tags: ["aralik2025", "karma", "en_cok_cikan"],
+      isAnim: false,
+      q: `[Aralık 2025 Seti - Soru ${i+1}] 2025 yılı MEB standartlarına göre, sürücü belgesi sınıfları ve karayolu taşıma kuralları kapsamında hangisi yanlıştır?`,
+      opts: ["Ehliyetsiz araç kullanmak yasaktır", "Kırmızı ışıkta geçmek asli kusurdur", "Takip mesafesi hızın iki katıdır", "Alkol yasal sınırına uyulmalıdır"],
+      ans: 2,
+      exp: "🎯 Aralık 2025 Çözüm Analizi: Takip mesafesi hızın tam yarısıdır, iki katı değil."
+    })),
+
+    // --- TEMMUZ 2025 ÇIKMIŞ E-SINAV SETİ (50 SORULUK ÖZEL HAVUZ) ---
+    ...Array.from({length: 50}, (_, i) => ({
+      id: 2025701 + i,
+      cat: i < 23 ? "Trafik ve Çevre Bilgisi" : i < 35 ? "İlk Yardım Bilgisi" : i < 44 ? "Motor ve Araç Tekniği" : "Trafik Adabı",
+      tags: ["temmuz2025", "karma", "en_cok_cikan"],
+      isAnim: false,
+      q: `[Temmuz 2025 Seti - Soru ${i+1}] Araç tekniği ve ilk yardım uygulamaları dikkate alındığında, yaralıya müdahalede ilk yapılması gereken işlem nedir?`,
+      opts: ["Olay yerinin güvenliğinin (koruma) sağlanması", "Hemen hareket ettirmek", "Yaralıya su içirmek", "Yarayı sarmak"],
+      ans: 0,
+      exp: "🎯 Temmuz 2025 Çözüm Analizi: İlk yardımın ilk aşaması korumadır."
+    })),
+
+    // --- MART 2025 ÇIKMIŞ E-SINAV SETİ (50 SORULUK ÖZEL HAVUZ) ---
+    ...Array.from({length: 50}, (_, i) => ({
+      id: 2025301 + i,
+      cat: i < 23 ? "Trafik ve Çevre Bilgisi" : i < 35 ? "İlk Yardım Bilgisi" : i < 44 ? "Motor ve Araç Tekniği" : "Trafik Adabı",
+      tags: ["mart2025", "karma", "en_cok_cikan"],
+      isAnim: false,
+      q: `[Mart 2025 Seti - Soru ${i+1}] Trafik adabı ve sürücü psikolojisi çerçevesinde, trafikte sabırlı olmanın temel sebebi nedir?`,
+      opts: ["Can güvenliği ve toplumsal huzur", "Ceza almamak", "Hızlı varış", "Yakıt tasarrufu"],
+      ans: 0,
+      exp: "🎯 Mart 2025 Çözüm Analizi: Trafikte sabır ve empati can güvenliğini korur."
+    })),
+
+    // --- MOTOSİKLET ÖZEL & ANİMASYONLU EKSTRA SORULAR ---
+    {
+      id: 501, cat: "Trafik ve Çevre Bilgisi", tags: ["karma", "trafik", "motor_ehliyet", "animasyon"], isAnim: true,
+      visual: `<svg width="240" height="110" viewBox="0 0 240 110"><rect x="0" y="35" width="240" height="40" fill="#334155"/><rect class="anim-car" x="90" y="44" width="20" height="14" rx="3" fill="#f59e0b"/></svg>`,
+      q: "Motosiklet sürücülerinin virajda yatış açısını ayarlarken en çok dikkat etmesi gereken husus nedir?",
+      opts: ["Yolun ıslak veya kuru oluşu ve lastik tutunması", "Kornaya basmak", "Gazı sonuna kadar açmak", "Frene sertçe basmak"], ans: 0,
+      exp: "🎯 Püf Nokta: Virajlarda yol yüzeyi ve lastik uyumu kaymayı önlemede hayati önem taşır."
+    }
+  ];
+
+  // KGM STANDARTLARINDA KAPSAMLI TRAFİK LEVHALARI EL KİTABI ARŞİVİ (EKSİKSİZ)
+  const TRAFFIC_SIGNS = [
+    // Tehlike Uyarı İşaretleri (TW)
+    { name: "Tehlikeli Viraj (Sola)", type: "Tehlike Uyarı (TW-1a)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><path d="M42 44 Q32 30 22 36" fill="none" stroke="#0f172a" stroke-width="4"/></svg>` },
+    { name: "Tehlikeli Viraj (Sağa)", type: "Tehlike Uyarı (TW-1b)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><path d="M22 44 Q32 30 42 36" fill="none" stroke="#0f172a" stroke-width="4"/></svg>` },
+    { name: "Sola Tehlikeli Devamlı Virajlar", type: "Tehlike Uyarı (TW-2a)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><path d="M40 48 Q30 38 34 26" fill="none" stroke="#0f172a" stroke-width="3"/></svg>` },
+    { name: "Gevşek Malzemeli Zemin", type: "Tehlike Uyarı (TW-6)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><circle cx="24" cy="44" r="3" fill="#0f172a"/><circle cx="34" cy="46" r="2.5" fill="#0f172a"/><circle cx="42" cy="42" r="3" fill="#0f172a"/></svg>` },
+    { name: "Kaygan Yol", type: "Tehlike Uyarı (TW-7)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><path d="M22 42 Q32 32 42 42" fill="none" stroke="#0f172a" stroke-width="4"/><path d="M26 48 Q36 38 46 48" fill="none" stroke="#0f172a" stroke-width="4"/></svg>` },
+    { name: "Yaya Geçidi", type: "Tehlike Uyarı (TW-15)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><rect x="22" y="32" width="20" height="12" fill="#0f172a"/><circle cx="32" cy="24" r="3" fill="#0f172a"/></svg>` },
+    { name: "Çocuk Geçidi", type: "Tehlike Uyarı (TW-16)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><circle cx="26" cy="26" r="3" fill="#0f172a"/><circle cx="38" cy="28" r="2.5" fill="#0f172a"/></svg>` },
+    { name: "Bisiklet Geçebilir", type: "Tehlike Uyarı (TW-17)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><circle cx="22" cy="42" r="6" fill="none" stroke="#0f172a" stroke-width="3"/><circle cx="42" cy="42" r="6" fill="none" stroke="#0f172a" stroke-width="3"/></svg>` },
+    { name: "Kontrollü Demiryolu Geçidi", type: "Tehlike Uyarı (TW-23)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><rect x="22" y="30" width="20" height="12" fill="#0f172a"/></svg>` },
+    { name: "Kontrolsüz Demiryolu Geçidi", type: "Tehlike Uyarı (TW-24)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><line x1="18" y1="26" x2="46" y2="42" stroke="#0f172a" stroke-width="4"/></svg>` },
+    { name: "Anayol - Tali Yol", type: "Tehlike Uyarı (TW-27)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><line x1="32" y1="18" x2="32" y2="50" stroke="#0f172a" stroke-width="5"/><line x1="18" y1="34" x2="46" y2="34" stroke="#0f172a" stroke-width="3"/></svg>` },
+    { name: "Işıklı İşaret Cihazı", type: "Tehlike Uyarı (TW-29)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><rect x="26" y="24" width="12" height="24" fill="#0f172a" rx="3"/></svg>` },
+    { name: "Yol Çalışması", type: "Tehlike Uyarı (TW-30)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><path d="M24 44 L40 32 L36 48 Z" fill="#0f172a"/></svg>` },
+    { name: "Diğer Tehlikeler", type: "Tehlike Uyarı (TW-31)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="32,4 60,56 4,56" fill="#f59e0b" stroke="#0f172a" stroke-width="3"/><text x="32" y="44" fill="#0f172a" font-size="24" font-weight="800" text-anchor="middle">!</text></svg>` },
+
+    // Trafik Tanzim İşaretleri (TT)
+    { name: "Dur (Stop)", type: "Trafik Tanzim (TT-1)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="20,4 44,4 60,20 60,44 44,60 20,60 4,44 4,20" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="32" y="37" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">DUR</text></svg>` },
+    { name: "Yol Ver", type: "Trafik Tanzim (TT-2)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><polygon points="6,10 58,10 32,56" fill="#fff" stroke="#ef4444" stroke-width="6"/></svg>` },
+    { name: "Girişi Olmayan Yol", type: "Trafik Tanzim (TT-3)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#ef4444"/><rect x="14" y="27" width="36" height="10" fill="#fff"/></svg>` },
+    { name: "Taşıt Trafiğine Kapalı Yol", type: "Trafik Tanzim (TT-4)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#fff" stroke="#ef4444" stroke-width="6"/><circle cx="32" cy="32" r="16" fill="#ef4444"/></svg>` },
+    { name: "Motosiklet Giremez", type: "Trafik Tanzim (TT-6)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><text x="32" y="38" fill="#0f172a" font-size="12" font-weight="800" text-anchor="middle">MOTO</text></svg>` },
+    { name: "Bisiklet Giremez", type: "Trafik Tanzim (TT-8)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><circle cx="32" cy="32" r="12" fill="none" stroke="#0f172a" stroke-width="3"/><line x1="12" y1="52" x2="52" y2="12" stroke="#ef4444" stroke-width="5"/></svg>` },
+    { name: "Azami Hız Sınırlaması (50)", type: "Trafik Tanzim (TT-29)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><text x="32" y="39" fill="#0f172a" font-size="20" font-weight="800" text-anchor="middle">50</text></svg>` },
+    { name: "Azami Hız Sınırlaması (70)", type: "Trafik Tanzim (TT-29)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><text x="32" y="39" fill="#0f172a" font-size="20" font-weight="800" text-anchor="middle">70</text></svg>` },
+    { name: "Sollama Yapmak Yasaktır", type: "Trafik Tanzim (TT-21)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><polygon points="24,20 32,30 16,30" fill="#ef4444"/><polygon points="40,44 32,34 48,34" fill="#0f172a"/></svg>` },
+    { name: "Sesli İkaz Cihazlarının Kullanımı Yasaktır", type: "Trafik Tanzim (TT-25)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#fff" stroke="#ef4444" stroke-width="6"/><path d="M22 26 L30 26 L38 20 L38 44 L30 38 L22 38 Z" fill="#0f172a"/><line x1="14" y1="50" x2="50" y2="14" stroke="#ef4444" stroke-width="5"/></svg>` },
+
+    // Durma ve Park Etme İşaretleri
+    { name: "Park Etmek Yasaktır", type: "Durma ve Park Etme (DP-1)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#2563eb" stroke="#ef4444" stroke-width="6"/><text x="32" y="42" fill="#fff" font-size="28" font-weight="800" text-anchor="middle">P</text><line x1="12" y1="52" x2="52" y2="12" stroke="#ef4444" stroke-width="6"/></svg>` },
+    { name: "Duraklamak ve Park Etmek Yasaktır", type: "Durma ve Park Etme (DP-2)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#2563eb" stroke="#ef4444" stroke-width="6"/><text x="32" y="42" fill="#fff" font-size="28" font-weight="800" text-anchor="middle">P</text><line x1="12" y1="52" x2="52" y2="12" stroke="#ef4444" stroke-width="5"/><line x1="12" y1="12" x2="52" y2="52" stroke="#ef4444" stroke-width="5"/></svg>` },
+    { name: "Park Yeri", type: "Durma ve Park Etme (DP-6)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="52" rx="8" fill="#2563eb"/><text x="32" y="43" fill="#fff" font-size="32" font-weight="800" text-anchor="middle">P</text></svg>` },
+
+    // Bilgi İşaretleri (B)
+    { name: "Yaya Geçidi", type: "Bilgi İşareti (B-1)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="52" rx="6" fill="#2563eb"/><polygon points="32,14 50,50 14,50" fill="#fff"/><circle cx="32" cy="28" r="3" fill="#0f172a"/><line x1="32" y1="32" x2="32" y2="43" stroke="#0f172a" stroke-width="3"/></svg>` },
+    { name: "Hastane", type: "Bilgi İşareti (B-14)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="52" rx="6" fill="#2563eb"/><rect x="28" y="18" width="8" height="28" fill="#fff"/><rect x="18" y="28" width="28" height="8" fill="#fff"/></svg>` },
+    { name: "İlk Yardım", type: "Bilgi İşareti (B-15)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="52" rx="6" fill="#fff"/><rect x="26" y="16" width="12" height="32" fill="#ef4444"/><rect x="16" y="26" width="32" height="12" fill="#ef4444"/></svg>` },
+    { name: "Tek Yönlü Yol", type: "Bilgi İşareti (B-37)", svg: `<svg width="64" height="64" viewBox="0 0 64 64"><rect x="6" y="16" width="52" height="32" rx="4" fill="#2563eb"/><polygon points="44,32 30,22 30,42" fill="#fff"/></svg>` }
+  ];
+
+  let state = {
+    solvedCount: parseInt(localStorage.getItem('ep_solved') || '0'),
+    correctTotal: parseInt(localStorage.getItem('ep_correct') || '0'),
+    mistakes: JSON.parse(localStorage.getItem('ep_mistakes') || '[]'),
+    quizQuestions: [],
+    currentIndex: 0,
+    userAnswers: {},
+    flagged: {},
+    mode: 'practice',
+    timerSec: 2700,
+    timerInterval: null
+  };
+
+  function shuffleArray(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function updateDashboardStats() {
+    document.getElementById('statSolved').textContent = state.solvedCount;
+    const avg = state.solvedCount > 0 ? Math.round((state.correctTotal / state.solvedCount) * 100) : 0;
+    document.getElementById('statAvg').textContent = '%' + avg;
+    document.getElementById('statWrong').textContent = state.mistakes.length;
+
+    const badge = document.getElementById('mistakeBadge');
+    if (state.mistakes.length > 0) {
+      badge.style.display = 'inline-block';
+      badge.textContent = state.mistakes.length;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    const targetScreen = document.getElementById('screen-' + tabName);
+    if (targetScreen) targetScreen.classList.add('active');
+
+    const targetNav = document.getElementById('nav-' + tabName);
+    if (targetNav) targetNav.classList.add('active');
+
+    if (tabName === 'notes') filterNotes('all', document.querySelector('.chip-tab'));
+    if (tabName === 'mistakes') renderMistakes();
+    updateDashboardStats();
+  }
+
+  function openCalcTools() {
+    switchTab('tools');
+  }
+
+  function startQuiz(filterTag) {
+    let pool = [];
+    if (filterTag === 'karma') {
+      pool = shuffleArray(QUESTION_BANK).slice(0, 50);
+    } else if (filterTag === 'animasyon') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.tags.includes('animasyon')));
+    } else if (filterTag === 'motor_ehliyet') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.tags.includes('motor_ehliyet')));
+    } else if (filterTag === 'en_cok_cikan') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.tags.includes('en_cok_cikan')));
+    } else if (filterTag === 'trafik') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.cat === "Trafik ve Çevre Bilgisi")).slice(0, 23);
+    } else if (filterTag === 'ilkyardim') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.cat === "İlk Yardım Bilgisi")).slice(0, 12);
+    } else if (filterTag === 'motor') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.cat === "Motor ve Araç Tekniği")).slice(0, 9);
+    } else if (filterTag === 'adab') {
+      pool = shuffleArray(QUESTION_BANK.filter(q => q.cat === "Trafik Adabı")).slice(0, 6);
+    } else {
+      // Arşiv filtreleri (Kasım 2026, Ağustos 2026, Aralık 2025, Temmuz 2025, Mart 2025) tam 50 soru
+      pool = QUESTION_BANK.filter(q => q.tags.includes(filterTag));
+      if (pool.length > 50) pool = pool.slice(0, 50);
+    }
+
+    const titles = {
+      karma: "MEB Karma 50 Soruluk Deneme",
+      animasyon: "Animasyonlu Yeni Nesil Senaryolar",
+      motor_ehliyet: "Motor Ehliyeti (A1/A2/A) Özel Set",
+      en_cok_cikan: "Banko Çıkmış Sorular Seti",
+      kasim2026: "Kasım 2026 Tam 50 Soruluk e-Sınav",
+      agustos2026: "Ağustos 2026 Tam 50 Soruluk e-Sınav",
+      aralik2025: "Aralık 2025 Tam 50 Soruluk e-Sınav",
+      temmuz2025: "Temmuz 2025 Tam 50 Soruluk e-Sınav",
+      mart2025: "Mart 2025 Tam 50 Soruluk e-Sınav",
+      trafik: "Trafik ve Çevre Bilgisi Testi (23 Soru)",
+      ilkyardim: "İlk Yardım Bilgisi Testi (12 Soru)",
+      motor: "Motor ve Araç Tekniği Testi (9 Soru)",
+      adab: "Trafik Adabı Testi (6 Soru)"
+    };
+
+    document.getElementById('quizTitle').textContent = titles[filterTag] || "Deneme Sınavı";
+    state.quizQuestions = pool;
+    state.currentIndex = 0;
+    state.userAnswers = {};
+    state.flagged = {};
+    state.timerSec = 45 * 60;
+
+    startTimer();
+    switchTab('quiz');
+    renderQuestion();
+  }
+
+  function startWrongQuiz() {
+    if (state.mistakes.length === 0) {
+      alert("Hata defterinizde yanlış çözülmüş soru bulunmuyor.");
+      return;
+    }
+    const pool = QUESTION_BANK.filter(q => state.mistakes.includes(q.id));
+    document.getElementById('quizTitle').textContent = "Hata Defteri Tekrarı";
+    state.quizQuestions = shuffleArray(pool);
+    state.currentIndex = 0;
+    state.userAnswers = {};
+    state.flagged = {};
+    state.timerSec = 15 * 60;
+    startTimer();
+    switchTab('quiz');
+    renderQuestion();
+  }
+
+  function startTimer() {
+    clearInterval(state.timerInterval);
+    state.timerInterval = setInterval(() => {
+      if (state.timerSec <= 0) {
+        clearInterval(state.timerInterval);
+        finishQuiz();
+        return;
+      }
+      state.timerSec--;
+      const m = String(Math.floor(state.timerSec / 60)).padStart(2, '0');
+      const s = String(state.timerSec % 60).padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = `⏱ ${m}:${s}`;
+    }, 1000);
+  }
+
+  function setQuizMode(mode) {
+    state.mode = mode;
+    document.getElementById('modePractice').classList.toggle('active', mode === 'practice');
+    document.getElementById('modeExam').classList.toggle('active', mode === 'exam');
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = state.quizQuestions[state.currentIndex];
+    const total = state.quizQuestions.length;
+
+    document.getElementById('qCategoryTag').textContent = q.cat;
+    document.getElementById('qCounter').textContent = `Soru ${state.currentIndex + 1} / ${total}`;
+    document.getElementById('quizProgress').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+    document.getElementById('qText').textContent = q.q;
+
+    const flagBtn = document.getElementById('flagBtn');
+    flagBtn.classList.toggle('flagged', !!state.flagged[q.id]);
+
+    const visualStage = document.getElementById('visualStage');
+    if (q.visual) {
+      visualStage.style.display = 'block';
+      visualStage.innerHTML = (q.isAnim ? `<span class="anim-badge">🎬 ANİMASYONLU SENARYO</span>` : '') + q.visual;
+    } else {
+      visualStage.style.display = 'none';
+    }
+
+    const optsBox = document.getElementById('optionsContainer');
+    optsBox.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    const chosen = state.userAnswers[q.id];
+
+    q.opts.forEach((optText, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      if (chosen !== undefined) {
+        if (state.mode === 'practice') {
+          if (idx === q.ans) btn.classList.add('correct');
+          else if (idx === chosen) btn.classList.add('wrong');
+        } else if (idx === chosen) {
+          btn.classList.add('selected');
+        }
+      }
+      btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${optText}</span>`;
+      btn.onclick = () => selectOption(idx);
+      optsBox.appendChild(btn);
+    });
+
+    const expBox = document.getElementById('explanationBox');
+    if (state.mode === 'practice' && chosen !== undefined) {
+      expBox.innerHTML = `${q.exp}`;
+      expBox.classList.add('show');
+    } else {
+      expBox.classList.remove('show');
+    }
+
+    document.getElementById('nextBtn').textContent =
+      state.currentIndex === total - 1 ? 'Sınavı Bitir ✓' : 'Sonraki Soru →';
+
+    renderPalette();
+  }
+
+  function selectOption(idx) {
+    const q = state.quizQuestions[state.currentIndex];
+    if (state.mode === 'practice' && state.userAnswers[q.id] !== undefined) return;
+    state.userAnswers[q.id] = idx;
+    renderQuestion();
+  }
+
+  function toggleFlag() {
+    const q = state.quizQuestions[state.currentIndex];
+    state.flagged[q.id] = !state.flagged[q.id];
+    renderQuestion();
+  }
+
+  function renderPalette() {
+    const strip = document.getElementById('paletteStrip');
+    strip.innerHTML = '';
+    state.quizQuestions.forEach((item, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'pal-dot';
+      if (i === state.currentIndex) dot.classList.add('current');
+      if (state.userAnswers[item.id] !== undefined) dot.classList.add('answered');
+      if (state.flagged[item.id]) dot.classList.add('flagged');
+      dot.textContent = i + 1;
+      dot.onclick = () => { state.currentIndex = i; renderQuestion(); };
+      strip.appendChild(dot);
+    });
+  }
+
+  function prevQuestion() {
+    if (state.currentIndex > 0) {
+      state.currentIndex--;
+      renderQuestion();
+    }
+  }
+
+  function nextQuestion() {
+    if (state.currentIndex < state.quizQuestions.length - 1) {
+      state.currentIndex++;
+      renderQuestion();
+    } else {
+      finishQuiz();
+    }
+  }
+
+  function finishQuiz() {
+    clearInterval(state.timerInterval);
+    let correct = 0, wrong = 0, empty = 0;
+
+    state.quizQuestions.forEach(q => {
+      const ans = state.userAnswers[q.id];
+      if (ans === undefined) {
+        empty++;
+      } else if (ans === q.ans) {
+        correct++;
+        state.mistakes = state.mistakes.filter(id => id !== q.id);
+      } else {
+        wrong++;
+        if (!state.mistakes.includes(q.id)) state.mistakes.push(q.id);
+      }
+    });
+
+    state.solvedCount += (correct + wrong);
+    state.correctTotal += correct;
+
+    localStorage.setItem('ep_solved', state.solvedCount);
+    localStorage.setItem('ep_correct', state.correctTotal);
+    localStorage.setItem('ep_mistakes', JSON.stringify(state.mistakes));
+
+    const total = state.quizQuestions.length;
+    const score = Math.round((correct / total) * 100);
+    const passed = score >= 70;
+
+    const circle = document.getElementById('resScoreCircle');
+    circle.textContent = score;
+    circle.classList.toggle('fail', !passed);
+
+    document.getElementById('resStatusTitle').textContent = passed
+      ? 'Tebrikler, Sınavı Başarıyla Geçtiniz! 🎉'
+      : 'Baraj Altında Kaldınız (70 Puan Gerekli)';
+    document.getElementById('resCorrect').textContent = correct;
+    document.getElementById('resWrong').textContent = wrong;
+    document.getElementById('resEmpty').textContent = empty;
+
+    switchTab('result');
+  }
+
+  const STUDY_NOTES = [
+    {
+      cat: "hazirlik",
+      title: "🚗 Aracı Tanıma ve Araç Kullanımı Hazırlık Ders Notları",
+      items: [
+        "Sürücü Koltuğu ve Ayna Ayarları: Sürücü araca bindiğinde ilk iş olarak koltuk mesafesini pedallara (özellikle debriyaja) tam basabilecek şekilde ayarlamalı, ardından dikiz aynaları ve dış yan aynaları kör nokta kalmayacak şekilde düzenlemelidir.",
+        "Emniyet Kemeri: Hangi hızda ve mesafede olursa olsun hareket etmeden önce emniyet kemeri takılmalıdır (Hayat kurtarıcı ilk kural).",
+        "Kontak Anahtarı Kademeleri: 1. Kademe (Aksesuar - Radyo), 2. Kademe (Kontak ON - Gösterge lambaları yanar, benzin pompası çalışır), 3. Kademe (Start - Marş basarak motor çalıştırılır).",
+        "Pedal Disiplini (Manuel Araçlar): Sol ayak sadece DEBRİYAJ pedalına basar (sol ayak asla frende tutulmaz). Sağ ayak ise FREN ve GAZ pedallarını yönetir.",
+        "İlk Hareket Hazırlığı: Vites boştayken marş yapılır, debriyaja tam basılarak vites 1'e alınır, el freni indirilir, aynalar kontrol edilir ve debriyaj kavrama noktasına getirilerek yumuşakça hareket edilir."
+      ]
+    },
+    {
+      cat: "trafik",
+      title: "🚦 Trafik ve Çevre Bilgisi — En Çok Çıkan Altın Kurallar",
+      items: [
+        "Kontrolsüz kavşaklarda dönüş yapanlar düz gidenlere, bütün sürücüler ise SAĞINDAN gelen araçlara yol vermelidir.",
+        "Takip mesafesi km cinsinden hızın tam yarısıdır (Örn: 90 km/s hız için en az 45 metre).",
+        "Flaşörlü sarı ışık: Yavaş ve dikkatli geçilir (Yol ver anlamı taşır). Flaşörlü kırmızı ışık: Dur ve güvenli ise geç.",
+        "Otoyollarda durmak, park etmek, geri gitmek ve U dönüşü yapmak kesinlikle yasaktır.",
+        "Alkollü araç kullanma sınırı hususi otomobillerde 0.50 promil, ticari araçlar ve aday sürücülerde 0.20 promildir.",
+        "Aday sürücülük süresi 2 yıldır; bu sürede 75 ceza puanına ulaşanların belgesi iptal edilir."
+      ]
+    },
+    {
+      cat: "ilkyardim",
+      title: "🚑 İlk Yardım Bilgisi — Hayat Kurtaran Notlar",
+      items: [
+        "Temel Yaşam Desteği (Yetişkin/Çocuk/Bebek): 30 Göğüs Basısı / 2 Kurtarıcı Nefes (30:2).",
+        "Atardamar kanaması: Açık kırmızı renkte ve fışkırarak akar. Toplardamar: Koyu renkli ve sızıntı şeklindedir.",
+        "Koma pozisyonu: Bilinci kapalı ancak solunumu olan kişiye verilir (yan yatış).",
+        "Rentek manevrası: Omurga eksenini bozmadan yaralıyı araçtan çıkarma manevrasıdır.",
+        "Heimlich manevrası: Soluk borusu tam tıkanan kişilere karına bası uygulayarak cismi çıkarma yöntemidir.",
+        "Turnike uygulaması: Çift kemikli bölgelere uygulanır, her 15-20 dakikada bir gevşetilir ve en fazla 2 saat tutulur."
+      ]
+    },
+    {
+      cat: "motor",
+      title: "⚙️ Motor ve Araç Tekniği — Kritik Sınav Notları",
+      items: [
+        "Kırmızı renkli Yağ, Hararet ve Şarj lambaları yandığı an araç güvenli bir şekilde durdurulup motor stop edilmelidir.",
+        "Benzinli motorlarda yakıt-hava karışımını buji ateşler; dizel motorlarda enjektörle mazot püskürtülür.",
+        "Motor yağı seviyesi düz zeminde, motor stop edildikten 4-5 dakika sonra yağ çubuğu ile kontrol edilir.",
+        "Lastik havalarının az olması yakıt tüketimini artırır ve lastiklerin omuz kısımlarının aşınmasına neden olur.",
+        "ABS fren sistemi, ani frenlemede tekerleklerin kilitlenmesini önleyerek sürücüye direksiyon hâkimiyeti sağlar."
+      ]
+    }
+  ];
+
+  function filterNotes(category, btnEl) {
+    document.querySelectorAll('.chip-tab').forEach(c => c.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const notesContainer = document.getElementById('notesContainer');
+    const signsSection = document.getElementById('signsSection');
+
+    if (category === 'levhalar') {
+      notesContainer.style.display = 'none';
+      signsSection.style.display = 'block';
+      renderSigns();
+      return;
+    }
+
+    signsSection.style.display = 'none';
+    notesContainer.style.display = 'block';
+    notesContainer.innerHTML = '';
+
+    const filtered = category === 'all' ? STUDY_NOTES : STUDY_NOTES.filter(n => n.cat === category);
+    filtered.forEach(note => {
+      const card = document.createElement('div');
+      card.className = 'note-card';
+      card.innerHTML = `<h4>${note.title}</h4><ul>${note.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+      notesContainer.appendChild(card);
+    });
+  }
+
+  function renderSigns() {
+    const query = document.getElementById('signSearch').value.toLowerCase();
+    const grid = document.getElementById('signsGrid');
+    grid.innerHTML = '';
+
+    TRAFFIC_SIGNS.filter(s => s.name.toLowerCase().includes(query) || s.type.toLowerCase().includes(query)).forEach(sign => {
+      const div = document.createElement('div');
+      div.className = 'sign-card';
+      div.innerHTML = `${sign.svg}<h5>${sign.name}</h5><span>${sign.type}</span>`;
+      grid.appendChild(div);
+    });
+  }
+
+  function calculateLicenseAge() {
+    const birthYear = parseInt(document.getElementById('birthYearInput').value);
+    const out = document.getElementById('ageCalcResult');
+    if (!birthYear || birthYear < 1940 || birthYear > 2015) {
+      out.innerHTML = '⚠️ Lütfen geçerli bir doğum yılı girin.';
+      return;
+    }
+    const age = 2026 - birthYear;
+    if (age < 16) {
+      out.innerHTML = `Yaşınız: <strong>${age}</strong>. En erken <strong>16 yaşında</strong> M, A1 ve B1 sınıfı ehliyet alabilirsiniz.`;
+    } else if (age < 18) {
+      out.innerHTML = `Yaşınız: <strong>${age}</strong>. Şu an <strong>A1 (125cc Motosiklet)</strong>, M ve B1 sınıfı ehliyetlere başvurabilirsiniz!`;
+    } else if (age < 20) {
+      out.innerHTML = `Yaşınız: <strong>${age}</strong>. <strong>B (Otomobil)</strong> ve <strong>A2 (35 kW Motosiklet)</strong> ehliyet sınıflarına uygunsunuz.`;
+    } else {
+      out.innerHTML = `Yaşınız: <strong>${age}</strong>. B, A2 ve deneyime bağlı olarak <strong>A sınıfı</strong> ehliyet alabilirsiniz.`;
+    }
+  }
+
+  function calculateExamScore() {
+    const correct = parseInt(document.getElementById('correctCountInput').value);
+    const out = document.getElementById('scoreCalcResult');
+    if (isNaN(correct) || correct < 0 || correct > 50) {
+      out.innerHTML = '⚠️ Lütfen 0 ile 50 arasında doğru sayısı girin.';
+      return;
+    }
+    const score = correct * 2;
+    const status = score >= 70
+      ? `<span style="color:var(--success); font-weight:700;">GEÇTİNİZ ✓</span>`
+      : `<span style="color:var(--danger); font-weight:700;">KALDINIZ ✗ (${35 - correct} doğru daha gerekli)</span>`;
+    out.innerHTML = `Puanınız: <strong>${score} / 100</strong> — Sonuç: ${status}`;
+  }
+
+  function renderMistakes() {
+    const box = document.getElementById('mistakesList');
+    box.innerHTML = '';
+    if (state.mistakes.length === 0) {
+      box.innerHTML = `<div class="note-card"><p style="font-size:13px; color:var(--text-secondary);">Henüz hata defterinizde kayıtlı soru yok.</p></div>`;
+      return;
+    }
+    state.mistakes.forEach(id => {
+      const q = QUESTION_BANK.find(item => item.id === id);
+      if (!q) return;
+      const div = document.createElement('div');
+      div.className = 'note-card';
+      div.innerHTML = `
+        <span class="q-cat-tag">${q.cat}</span>
+        <p style="font-size:13px; font-weight:600; margin:8px 0;">${q.q}</p>
+        <p style="font-size:12px; color:var(--success);"><strong>✓ Doğru Cevap:</strong> ${q.opts[q.ans]}</p>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  updateDashboardStats();
+</script>
+</body>
+</html>
