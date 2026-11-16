@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ehliyet Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f6;--sf:#fff;--ink:#14212e;--mu:#5a6b7b;--bl:#0b4f8a;--ye:#ffc20e;--ok:#17803d;--okb:#e3f4e8;--bad:#b3261e;--badb:#fbe7e5;--ln:#d5dde6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1620;--sf:#17232f;--ink:#e9eff5;--mu:#9fb0c0;--bl:#2d7cc4;--okb:#12301d;--badb:#3a1a18;--ok:#5fd18a;--bad:#ff8a80;--ln:#2a3a4a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1620;--sf:#17232f;--ink:#e9eff5;--mu:#9fb0c0;--bl:#2d7cc4;--okb:#12301d;--badb:#3a1a18;--ok:#5fd18a;--bad:#ff8a80;--ln:#2a3a4a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.45 Barlow,system-ui,sans-serif}
+button,input{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ye);outline-offset:2px}
+h1,h2,h3,h4,b{font-family:"Barlow Semi Condensed",Barlow,sans-serif}
+h1,h2,h3,h4{margin:0;line-height:1.1}
+.app{height:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;background:var(--bg)}
+.hd{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bl);color:#fff}
+.hd h1{font-size:22px;font-weight:800}.hd span{font-size:13px;opacity:.85}.hd>div:nth-child(2){flex:1}
+.lg{width:40px;height:40px;border-radius:10px;background:var(--ye);color:#14212e;display:grid;place-items:center;font:800 22px "Barlow Semi Condensed"}
+.ib{width:38px;height:38px;border-radius:10px;border:2px solid rgba(255,255,255,.5);background:none;color:#fff;font-size:18px}
+main{flex:1;overflow-y:auto;padding:14px 16px 20px}
+.nav{display:flex;border-top:2px solid var(--ln);background:var(--sf)}
+.nv{flex:1;background:none;border:0;padding:8px 2px;font-size:12px;color:var(--mu);display:grid;gap:2px;justify-items:center}
+.nv i{font-style:normal;font-size:20px}.nv.on{color:var(--bl);font-weight:600;box-shadow:inset 0 3px var(--ye)}
+.ban{background:var(--bl);color:#fff;border:3px solid #fff;outline:3px solid var(--bl);border-radius:16px;padding:18px;margin:4px 4px 16px}
+.ban h2{font-size:28px;font-weight:800}.ban p{margin:6px 0 12px;opacity:.92}
+.go{width:100%;background:var(--ye);color:#14212e;border:0;border-radius:12px;padding:12px;font:700 19px "Barlow Semi Condensed"}
+.go.alt{background:var(--sf);color:var(--ink);border:2px solid var(--ln);margin-top:10px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.st div{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:10px;text-align:center;font-size:13px;color:var(--mu)}
+.st b{display:block;font-size:26px;color:var(--bl)}
+.goal{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:12px}
+.gl{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600}
+.prog{height:10px;background:var(--ln);border-radius:6px;overflow:hidden;flex:1}.prog i{display:block;height:100%;background:var(--ye);transition:width .25s}
+.sh{font-size:20px;margin:20px 0 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{background:var(--sf);border:2px solid var(--ln);border-radius:14px;padding:14px;text-align:left}
+.cat:hover{border-color:var(--bl)}.cat .e{font-size:26px}.cat b{display:block;font-size:19px;margin-top:4px}.cat small{color:var(--mu)}
+.cat.w{grid-column:1/-1;border-color:var(--bl);border-width:3px}
+.tip{margin-top:16px;background:var(--sf);border-left:6px solid var(--ye);border-radius:10px;padding:12px 14px}
+.tip b{display:block;margin-bottom:2px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bk{background:none;border:2px solid var(--ln);border-radius:10px;padding:5px 12px}
+.ct{font:700 18px "Barlow Semi Condensed";color:var(--mu)}.ct.lo{color:var(--bad)}
+.pal{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px}
+.pd{flex:none;width:34px;height:34px;border-radius:9px;border:2px solid var(--ln);background:var(--sf);font-weight:600}
+.pd.an{background:var(--bl);border-color:var(--bl);color:#fff}.pd.fl{border-color:var(--ye);box-shadow:0 0 0 2px var(--ye)}.pd.cu{outline:3px solid var(--ink)}
+.q{background:var(--bl);color:#fff;border:3px solid #fff;outline:3px solid var(--bl);border-radius:16px;padding:20px;margin:6px 4px 18px}
+.q h2{font-size:24px;font-weight:700}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;text-align:left;width:100%;background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:12px 14px}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--ln);display:grid;place-items:center;font:700 15px "Barlow Semi Condensed"}
+.opt:disabled{cursor:default}
+.opt.sel{border-color:var(--bl);background:color-mix(in srgb,var(--bl) 14%,var(--sf))}.opt.sel .l{background:var(--bl);color:#fff;border-color:var(--bl)}
+.opt.ok{background:var(--okb);border-color:var(--ok)}.opt.ok .l{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.no{background:var(--badb);border-color:var(--bad)}.opt.no .l{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;border-left:6px solid}.fb.ok{background:var(--okb);border-color:var(--ok)}.fb.no{background:var(--badb);border-color:var(--bad)}
+.fb b{font-size:19px}
+.row{display:flex;gap:10px;margin-top:14px}.row button{flex:1;margin:0}
+.fg{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:12px}.fg.on{border-color:var(--ye);background:color-mix(in srgb,var(--ye) 25%,var(--sf))}
+.res{text-align:center;padding:10px 0}
+.ring{--p:0;width:150px;height:150px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:conic-gradient(var(--ye) calc(var(--p)*1%),var(--ln) 0)}
+.ring div{width:118px;height:118px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font:800 44px "Barlow Semi Condensed"}
+.pass{color:var(--ok)}.fail{color:var(--bad)}
+.card,.ri{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.card ul{margin:0;padding-left:20px}.card li{margin:6px 0}
+.ri small{display:block;margin-top:4px;color:var(--mu)}.ri .g{color:var(--ok);font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.chip{flex:none;border:2px solid var(--ln);background:var(--sf);border-radius:20px;padding:6px 14px}.chip.on{background:var(--bl);border-color:var(--bl);color:#fff}
+.inp{width:100%;background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:12px;text-align:center}
+.sc svg{width:64px;height:64px}.sc b{display:block;font-size:17px;margin-top:6px}.sc small{color:var(--mu);font-size:13px}
+.out{margin-top:10px;font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hd"><div class="lg">E</div><div><h1>Ehliyet Academy</h1><span>Sınava hazırlık</span></div><button class="ib" id="th" aria-label="Temayı değiştir">◐</button></header>
+<main id="v"></main>
+<nav class="nav">
+<button class="nv" data-v="home"><i>🏠</i>Ana sayfa</button>
+<button class="nv" data-v="exam"><i>📝</i>Deneme</button>
+<button class="nv" data-v="notes"><i>📖</i>Notlar</button>
+<button class="nv" data-v="tools"><i>🧮</i>Araçlar</button>
+<button class="nv" data-v="mist"><i>📕</i>Hatalar</button>
+</nav>
+</div>
+<script>
+var CATS={t:["Trafik ve Çevre","🚦"],i:["İlk Yardım","🚑"],m:["Motor ve Araç Tekniği","⚙️"],a:["Trafik Adabı","🤝"]};
+var Q=[
+["t","Otomobiller için yerleşim yeri içinde azami hız sınırı kaç km/saattir?",["30","50","60","70"],1,"Aksi belirtilmedikçe yerleşim yerlerinde azami hız 50 km/saattir."],
+["t","Otomobiller için otoyollarda azami hız sınırı kaç km/saattir?",["90","100","110","120"],3,"Otomobillerde otoyol sınırı 120 km/saattir."],
+["t","Kırmızı ışık yanan bir kavşakta sürücü ne yapmalıdır?",["Yavaşlayıp geçmeli","Durma çizgisinin gerisinde durmalı","Sağa sinyal verip geçmeli","Kornaya basarak geçmeli"],1,"Kırmızı ışıkta durma çizgisinin gerisinde beklenir."],
+["t","Çift sürekli sarı çizgi bulunan yolda hangisi doğrudur?",["Öndeki aracı geçmek","Çizgiyi ihlal ederek U dönüşü yapmak","Kendi şeridinde ilerlemek","Karşı şeritte park etmek"],2,"Çift sürekli çizgi ihlal edilemez; araç kendi şeridinde ilerlemelidir."],
+["t","Hemzemin geçide yaklaşırken tren geliyorsa sürücü ne yapmalıdır?",["Hızlanıp geçmeli","Durup treni beklemeli","Yanındaki aracı geçmeli","Korna çalarak geçmeli"],1,"Tren yaklaşırken geçide girilmez, tren geçene kadar beklenir."],
+["t","Dönel kavşağa girmek isteyen sürücü kimlere yol vermelidir?",["Kavşak dışında bekleyenlere","Kavşak içinde dönmekte olanlara","Hiç kimseye","Yalnızca motosikletlere"],1,"Aksi bir işaret yoksa kavşak içindeki araçlara geçiş önceliği verilir."],
+["t","Özel otomobil sürücüleri için izin verilen azami alkol sınırı kaç promildir?",["0,20","0,50","0,80","1,00"],1,"Özel araçlarda sınır 0,50 promildir; ticari araçlarda 0,20 promildir."],
+["t","Aşağıdakilerden hangisinde park etmek yasaktır?",["Park işaretli alanda","Yol kenarındaki uygun alanda","Yaya geçidi üzerinde","Ücretli otoparkta"],2,"Yaya geçidi üzerinde durmak ve park etmek yasaktır."],
+["i","Acil sağlık yardımı için hangi numara aranır?",["110","112","155","158"],1,"112 Acil Çağrı Merkezi’dir."],
+["i","Trafik kazasında ilk yapılması gereken nedir?",["Yaralıyı hemen taşımak","Olay yerini güvene alıp 112’yi aramak","Yaralıya su vermek","Araçları yoldan çekmek"],1,"Önce güvenlik sağlanır, sonra yardım çağrılır."],
+["i","Yetişkinde kalp masajında bası ve soluk oranı nedir?",["15 bası, 1 soluk","30 bası, 2 soluk","5 bası, 1 soluk","10 bası, 2 soluk"],1,"Yetişkinde 30 bası ve 2 soluk uygulanır."],
+["i","Bilinci kapalı ama solunumu olan yaralıya hangi pozisyon verilir?",["Sırtüstü, bacaklar yukarıda","Yan yatış (koma) pozisyonu","Oturur pozisyon","Yüzüstü pozisyon"],1,"Yan yatış, hava yolunu açık tutar ve boğulma riskini azaltır."],
+["i","Dışarıya olan kanamada ilk yapılacak işlem nedir?",["Hemen turnike uygulamak","Yaraya temiz bezle doğrudan baskı yapmak","Yarayı alkolle yıkamak","Yarayı açık bırakmak"],1,"Kanamayı durdurmak için yaraya doğrudan baskı uygulanır."],
+["i","Kırık şüphesi olan yaralıya ne yapılmalıdır?",["Kırık bölge düzeltilmeli","Kırık bölge hareket ettirilmeden sabitlenmeli","Yürütülmeli","Masaj yapılmalı"],1,"Kırık bölge hareket ettirilmeden desteklenip sabitlenir."],
+["m","Dört zamanlı motorda zamanların doğru sırası hangisidir?",["Emme, sıkıştırma, yanma, egzoz","Sıkıştırma, emme, egzoz, yanma","Emme, egzoz, sıkıştırma, yanma","Yanma, emme, egzoz, sıkıştırma"],0,"Sıra: emme, sıkıştırma, yanma (güç) ve egzoz."],
+["m","Akünün temel görevi nedir?",["Yakıtı depolamak","Elektrik enerjisini depolamak","Motoru soğutmak","Yağı pompalamak"],1,"Akü elektrik enerjisini depolar ve marş için güç sağlar."],
+["m","Lastik basıncı ne zaman kontrol edilmelidir?",["Uzun yoldan hemen sonra","Lastikler soğukken","Lastikler sıcakken","Yağmur yağarken"],1,"Sıcak lastikte basınç yükselir, doğru ölçüm için soğukken kontrol edilir."],
+["m","ABS sisteminin görevi nedir?",["Yakıt tasarrufu sağlamak","Frenleme sırasında tekerleklerin kilitlenmesini önlemek","Motoru soğutmak","Hızı sabit tutmak"],1,"ABS, ani frenlemede direksiyon hakimiyetini korumaya yardımcı olur."],
+["m","Radyatörün görevi nedir?",["Motor soğutma suyunu soğutmak","Yakıtı süzmek","Aküyü şarj etmek","Egzoz gazını temizlemek"],0,"Radyatör, motordan gelen sıcak soğutma suyunu soğutur."],
+["m","Katalitik konvertörün amacı nedir?",["Egzoz sesini artırmak","Zararlı egzoz gazlarını azaltmak","Yakıt basıncını yükseltmek","Motor gücünü artırmak"],1,"Katalitik konvertör, egzoz emisyonunu azaltır."],
+["a","Yaya geçidine yaklaşırken geçmek isteyen yaya varsa sürücü ne yapmalıdır?",["Hızlanıp geçmeli","Durup yol vermeli","Korna çalmalı","Sağdan geçmeli"],1,"Yaya geçidinde yayalara öncelik tanınır."],
+["a","Karşıdan araç gelirken hangi far kullanılmalıdır?",["Uzun far","Kısa far","Sis farı","Hiçbiri"],1,"Karşıdan gelen sürücünün gözünü almamak için kısa far kullanılır."],
+["a","Uzun yolda yorgunluk hissedilirse ne yapılmalıdır?",["Müzik sesi açılmalı","Güvenli yerde durup dinlenilmeli","Hız artırılmalı","Yola devam edilmeli"],1,"Yorgunlukta mola vermek kazaları önler."],
+["a","Sürüş sırasında cep telefonu kullanımı hakkında hangisi doğrudur?",["Kısa konuşmalar serbesttir","Elde tutarak kullanmak yasaktır","Mesaj okunabilir","Düşük hızda serbesttir"],1,"Sürüş sırasında telefonu elde tutarak kullanmak yasaktır."],
+["a","Siren çalan ambulans yaklaşırken sürücü ne yapmalıdır?",["Hızlanmalı","Yol verip güvenle kenara çekilmeli","Peşinden gitmeli","Aynı şekilde devam etmeli"],1,"Acil durum araçlarına yol verilir."],
+["a","Engelli park yerine kimler park edebilir?",["Herkes kısa süreliğine","Yalnızca hak sahibi sürücüler","Gece herkes","Flaşörü yanan araçlar"],1,"Bu alanlar yalnızca hak sahibi sürücüler içindir."]
+];
+Q=Q.concat([
+["t","90 km/saat hızla giden aracın asgari takip mesafesi kaç metredir?",["30","45","60","90"],1,"Takip mesafesi, km/saat cinsinden hızın yarısı kadar metredir: 45 metre."],
+["t","Otoyolda aşağıdakilerden hangisi yasaktır?",["Sollama yapmak","Geri geri gitmek","Şerit değiştirmek","Sinyal vermek"],1,"Otoyolda durmak, park etmek, geri gitmek ve U dönüşü yapmak yasaktır."],
+["t","Flaşörlü sarı ışık yanan kavşakta sürücü ne yapmalıdır?",["Durmalı","Yavaşlayıp dikkatle geçmeli","Hızlanmalı","Geri dönmeli"],1,"Flaşörlü sarı ışıkta yavaşlanır ve dikkatle geçilir."],
+["t","Dur levhası bulunan kavşakta sürücü ne yapmalıdır?",["Yavaşlayıp geçmeli","Aracı tamamen durdurmalı","Korna çalmalı","Sağa çekilmeli"],1,"Dur levhasında araç tamamen durdurulur, gerekirse yol verilir."],
+["i","Atardamar kanaması nasıl akar?",["Koyu renkli ve sızarak","Açık kırmızı ve fışkırarak","Damla damla","Renksiz"],1,"Atardamar kanı açık kırmızıdır ve kalp atışıyla fışkırır."],
+["i","Soluk borusu tam tıkanan kişiye hangi yöntem uygulanır?",["Rautek manevrası","Heimlich manevrası","Koma pozisyonu","Turnike"],1,"Heimlich manevrası, karına bası uygulayarak yabancı cismi çıkarmaya çalışır."],
+["m","Kırmızı yağ basıncı lambası yanarsa ne yapılmalıdır?",["Yola devam edilmeli","Güvenli yerde durup motor kapatılmalı","Hızlanılmalı","Lamba önemsenmemeli"],1,"Yağ basıncı düşerse motor ciddi zarar görebilir; araç durdurulur."],
+["m","Lastik havası az olursa ne olur?",["Yakıt tüketimi artar","Yakıt tüketimi azalır","Fren mesafesi kısalır","Hiçbir etkisi olmaz"],0,"Düşük basınç yuvarlanma direncini artırır ve yakıt tüketimi yükselir."],
+["a","Korna ne zaman kullanılmalıdır?",["Her zaman","Yalnızca gerektiğinde, uyarı amacıyla","Sıkışık trafikte sürekli","Gece yerleşim yerinde"],1,"Korna gereksiz yere çalınmaz."]
+]);
+var N={t:["Trafik ve Çevre",["Takip mesafesi, km/saat hızın yarısı kadar metredir: 90 km/saat için 45 metre.","Kontrolsüz kavşakta sağdan gelene yol verilir; dönenler düz gidene yol verir.","Flaşörlü sarıda yavaşlayıp dikkatle geçilir; flaşörlü kırmızıda durulur, yol güvenliyse geçilir.","Otoyolda durmak, park etmek, geri gitmek ve U dönüşü yapmak yasaktır.","Alkol sınırı özel araçta 0,50, ticari araçta 0,20 promildir."]],
+i:["İlk Yardım",["Önce olay yerini güvene al, sonra 112’yi ara.","Temel yaşam desteğinde 30 göğüs basısı ve 2 soluk uygulanır.","Atardamar kanaması açık kırmızı ve fışkırarak, toplardamar kanaması koyu renkli ve sızarak akar.","Bilinci kapalı, solunumu olan kişi yan yatış (koma) pozisyonuna alınır.","Soluk borusu tam tıkanan kişiye Heimlich manevrası uygulanır.","Rautek manevrası, yaralıyı omurgayı bozmadan araçtan çıkarmak içindir ve yalnızca acil tehlike varsa uygulanır."]],
+m:["Motor ve Araç Tekniği",["Kırmızı yağ, hararet ve şarj lambaları yanarsa güvenli yerde durup motor kapatılır.","Benzinli motorda karışımı buji ateşler; dizelde yakıt püskürtülür ve sıkışan havada tutuşur.","Lastik basıncı soğukken kontrol edilir; düşük basınç yakıt tüketimini artırır.","ABS, ani frenlemede tekerleğin kilitlenmesini önler ve direksiyon hakimiyeti sağlar."]],
+a:["Trafik Adabı",["Yaya geçidinde yayaya yol verilir.","Karşıdan araç gelirken kısa far kullanılır.","Yorgunluk dikkati ciddi biçimde düşürür; yorgunken mola verilir.","Acil durum araçlarına yol verilir, kornaya gereksiz basılmaz.","Engelli park yerine yalnızca hak sahibi sürücü park eder."]]};
+function sv(k){var r='stroke="#d32f2f"',b='fill="#1565c0"',c={
+dur:'<polygon points="21,4 43,4 60,21 60,43 43,60 21,60 4,43 4,21" fill="#d32f2f" stroke="#fff" stroke-width="3"/><text x="32" y="38" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">DUR</text>',
+yol:'<polygon points="9,10 55,10 32,54" fill="#fff" '+r+' stroke-width="7" stroke-linejoin="round"/>',
+gir:'<circle cx="32" cy="32" r="28" fill="#d32f2f"/><rect x="14" y="27" width="36" height="10" fill="#fff"/>',
+hiz:'<circle cx="32" cy="32" r="26" fill="#fff" '+r+' stroke-width="7"/><text x="32" y="41" text-anchor="middle" font-size="26" font-weight="800" fill="#111">50</text>',
+prk:'<circle cx="32" cy="32" r="26" '+b+' '+r+' stroke-width="6"/><line x1="16" y1="48" x2="48" y2="16" '+r+' stroke-width="6"/>',
+dpr:'<circle cx="32" cy="32" r="26" '+b+' '+r+' stroke-width="6"/><path d="M16 48L48 16M16 16L48 48" '+r+' stroke-width="6"/>',
+sag:'<circle cx="32" cy="32" r="28" '+b+'/><path d="M16 32H44M34 20L46 32L34 44" stroke="#fff" stroke-width="7" fill="none"/>',
+teh:'<polygon points="32,6 60,56 4,56" fill="#fff" '+r+' stroke-width="6" stroke-linejoin="round"/><text x="32" y="48" text-anchor="middle" font-size="30" font-weight="800" fill="#111">!</text>'}[k];
+return '<svg viewBox="0 0 64 64" aria-hidden="true">'+c+'</svg>'}
+var SG=[["dur","Dur","Yasaklayıcı","Araç tamamen durdurulur."],["yol","Yol ver","Yasaklayıcı","Ana yoldaki araca öncelik tanınır."],["gir","Girilmez","Yasaklayıcı","Bu yöne taşıt giremez."],["hiz","Azami hız 50","Yasaklayıcı","Hız 50 km/saati aşamaz."],["prk","Park etmek yasak","Yasaklayıcı","Park edilmez, kısa duruş yapılabilir."],["dpr","Durmak yasak","Yasaklayıcı","Durmak ve park etmek yasaktır."],["sag","Sağa mecburi yön","Mecburi","Yalnızca sağa gidilebilir."],["teh","Tehlike","Uyarı","İleride tehlike olabilir, dikkatli ol."]];
+var $=function(s){return document.querySelector(s)},V=$("#v"),cur=null,tm=null,NT="t";
+var S={n:0,ok:0,m:[],best:{},d:"",c:0};
+try{var sv0=JSON.parse(localStorage.getItem("ea2")||"null");if(sv0)S=sv0;var th=localStorage.getItem("ea-th");if(th)document.documentElement.dataset.theme=th}catch(e){}
+var td=new Date().toISOString().slice(0,10);if(S.d!=td){S.d=td;S.c=0}
+function save(){try{localStorage.setItem("ea2",JSON.stringify(S))}catch(e){}}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+$("#th").onclick=function(){var d=document.documentElement,dark=d.dataset.theme?d.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;d.dataset.theme=dark?"light":"dark";try{localStorage.setItem("ea-th",d.dataset.theme)}catch(e){}};
+document.querySelectorAll(".nv").forEach(function(b){b.onclick=function(){if(b.dataset.v=="exam")start("exam");else go(b.dataset.v)}});
+function go(v){clearInterval(tm);cur=null;document.querySelectorAll(".nv").forEach(function(b){b.classList.toggle("on",b.dataset.v==v)});({home:home,notes:notes,tools:tools,mist:mist})[v]();V.scrollTop=0}
+function home(){
+ var p=S.n?Math.round(S.ok/S.n*100):0,g=Math.min(100,Math.round(S.c/20*100)),all=[];
+ for(var k in N)all=all.concat(N[k][1]);
+ var tip=all[Math.floor(Date.now()/864e5)%all.length];
+ var h='<div class="ban"><h2>Deneme sınavı</h2><p>20 soru, 18 dakika. Cevaplar sınav bitince açıklanır.</p><button class="go" onclick="start(\'exam\')">Sınavı başlat</button></div>';
+ h+='<div class="st"><div><b>'+S.n+'</b>Çözülen</div><div><b>%'+p+'</b>Başarı</div><div><b>'+S.m.length+'</b>Hata defteri</div></div>';
+ h+='<div class="goal"><div class="gl"><span>Günlük hedef</span><span>'+Math.min(S.c,20)+'/20 soru</span></div><div class="prog"><i style="width:'+g+'%"></i></div></div><h3 class="sh">Konuya göre çalış</h3><div class="grid">';
+ for(k in CATS){var n=Q.filter(function(q){return q[0]==k}).length;h+='<button class="cat" onclick="start(\''+k+'\')"><span class="e">'+CATS[k][1]+'</span><b>'+CATS[k][0]+'</b><small>'+n+' soru'+(S.best[k]!=null?' · en iyi %'+S.best[k]:'')+'</small></button>'}
+ h+='<button class="cat w" onclick="start(\'mix\')"><b>Karma çalışma</b><small>Tüm konular, anında açıklamalı'+(S.best.mix!=null?' · en iyi %'+S.best.mix:'')+'</small></button></div><div class="tip"><b>Günün ipucu</b>'+tip+'</div>';
+ V.innerHTML=h;
+}
+function start(c){
+ var ids=Q.map(function(q,i){return i}),pool;
+ if(c=="exam")pool=shuf(ids).slice(0,20);else if(c=="mist")pool=shuf(S.m);else if(c=="mix")pool=shuf(ids);else pool=shuf(ids.filter(function(i){return Q[i][0]==c}));
+ cur={c:c,x:c=="exam",qs:pool,i:0,a:{},f:{},o:{},t:1080,t0:Date.now()};
+ document.querySelectorAll(".nv").forEach(function(b){b.classList.toggle("on",cur.x&&b.dataset.v=="exam")});
+ clearInterval(tm);
+ if(cur.x)tm=setInterval(function(){cur.t--;var e=$("#tm");if(e){e.textContent=Math.floor(cur.t/60)+":"+("0"+cur.t%60).slice(-2);e.classList.toggle("lo",cur.t<60)}if(cur.t<=0)finish()},1000);
+ show(true);
+}
+function show(top){
+ var qi=cur.qs[cur.i],q=Q[qi],last=cur.i==cur.qs.length-1;
+ if(!cur.o[qi])cur.o[qi]=shuf(q[2].map(function(t,k){return k}));
+ var sel=cur.a[qi],lock=!cur.x&&sel!=null,h='<div class="top"><button class="bk" onclick="quit()">Çık</button><div class="prog"><i style="width:'+(cur.i/cur.qs.length*100)+'%"></i></div>'+(cur.x?'<span class="ct" id="tm">'+Math.floor(cur.t/60)+":"+("0"+cur.t%60).slice(-2)+'</span>':'')+'<span class="ct">'+(cur.i+1)+'/'+cur.qs.length+'</span></div>';
+ if(cur.x){h+='<div class="pal">';cur.qs.forEach(function(id,i){h+='<button class="pd'+(cur.a[id]!=null?' an':'')+(cur.f[id]?' fl':'')+(i==cur.i?' cu':'')+'" onclick="cur.i='+i+';show(true)" aria-label="Soru '+(i+1)+'">'+(i+1)+'</button>'});h+='</div>'}
+ h+='<div class="q"><h2>'+q[1]+'</h2></div><div class="opts">';
+ cur.o[qi].forEach(function(k,j){var c="";if(lock){if(k==q[3])c=" ok";else if(k==sel)c=" no"}else if(k==sel)c=" sel";h+='<button class="opt'+c+'"'+(lock?' disabled':'')+' onclick="pick('+qi+','+k+')"><span class="l">'+"ABCD"[j]+'</span><span>'+q[2][k]+'</span></button>'});
+ h+='</div>';
+ if(lock){var g=sel==q[3];h+='<div class="fb '+(g?'ok':'no')+'"><b>'+(g?'Doğru!':'Yanlış.')+'</b><div>'+q[4]+'</div></div><button class="go" style="margin-top:14px" onclick="nxt()">'+(last?'Sonucu gör':'Sonraki soru')+'</button>'}
+ if(cur.x){h+='<div class="row"><button class="fg'+(cur.f[qi]?' on':'')+'" onclick="cur.f['+qi+']=!cur.f['+qi+'];show()">'+(cur.f[qi]?'Bayrak kaldır':'Bayrakla')+'</button><button class="go alt" '+(cur.i?'onclick="cur.i--;show(true)"':'disabled')+'>Önceki</button><button class="go" onclick="nxt()">'+(last?'Bitir':'Sonraki')+'</button></div>'}
+ V.innerHTML=h;if(top)V.scrollTop=0;
+}
+function quit(){if(confirm("Sınavdan çıkılsın mı? İlerleme kaydedilmez."))go("home")}
+function pick(qi,k){if(!cur.x){if(cur.a[qi]!=null)return;cur.a[qi]=k;rec(qi,k==Q[qi][3])}else cur.a[qi]=k;show()}
+function nxt(){if(cur.i<cur.qs.length-1){cur.i++;show(true)}else finish()}
+function rec(qi,g){S.n++;S.c++;if(g){S.ok++;S.m=S.m.filter(function(x){return x!=qi})}else if(S.m.indexOf(qi)<0)S.m.push(qi);save()}
+function finish(){
+ clearInterval(tm);var ok=0,no=0,em=0,bad=[];
+ cur.qs.forEach(function(id){var a=cur.a[id];if(a==null){em++;bad.push(id)}else{var g=a==Q[id][3];if(cur.x)rec(id,g);if(g)ok++;else{no++;bad.push(id)}}});
+ var tot=cur.qs.length,p=Math.round(ok/tot*100),pass=p>=70;
+ if(cur.c!="mist"&&(S.best[cur.c]==null||p>S.best[cur.c]))S.best[cur.c]=p;save();
+ var h='<div class="res"><div class="ring" style="--p:'+p+'"><div class="'+(pass?'pass':'fail')+'">'+p+'</div></div><h2>'+(pass?'Geçtin!':'Baraj altında kaldın')+'</h2><p>'+ok+' doğru, '+no+' yanlış, '+em+' boş. Geçmek için en az %70 gerekir.'+(cur.x?' Süre: '+Math.round((Date.now()-cur.t0)/60000)+' dk.':'')+'</p></div>';
+ if(bad.length){h+='<h3 class="sh">Gözden geçir</h3>';bad.forEach(function(id){var q=Q[id],a=cur.a[id];h+='<div class="ri">'+q[1]+'<small>'+(a==null?'Boş bıraktın.':'Cevabın: '+q[2][a])+'</small><small class="g">Doğru: '+q[2][q[3]]+'</small><small>'+q[4]+'</small></div>'})}
+ var c=cur.c;h+='<button class="go" onclick="start(\''+c+'\')">Tekrar çöz</button><button class="go alt" onclick="go(\'home\')">Ana sayfa</button>';
+ V.innerHTML=h;V.scrollTop=0;
+}
+function notes(){
+ var h='<div class="chips">';for(var k in N)h+='<button class="chip'+(k==NT?' on':'')+'" onclick="NT=\''+k+'\';notes()">'+N[k][0]+'</button>';
+ h+='<button class="chip'+(NT=="s"?' on':'')+'" onclick="NT=\'s\';notes()">Levhalar</button></div>';
+ if(NT=="s"){V.innerHTML=h+'<input id="sq" class="inp" placeholder="Levha ara" oninput="signs()"><div class="sg" id="sg"></div>';signs()}
+ else V.innerHTML=h+'<div class="card"><ul>'+N[NT][1].map(function(i){return'<li>'+i+'</li>'}).join('')+'</ul></div>';
+}
+function signs(){var s=$("#sq").value.toLocaleLowerCase("tr"),h="";SG.forEach(function(x){if((x[1]+x[2]).toLocaleLowerCase("tr").indexOf(s)>-1)h+='<div class="sc">'+sv(x[0])+'<b>'+x[1]+'</b><small>'+x[2]+'. '+x[3]+'</small></div>'});$("#sg").innerHTML=h||'<p>Levha bulunamadı.</p>'}
+function tools(){
+ V.innerHTML='<div class="card"><h3>Sınav puanı hesapla</h3><p>Sınavda 50 soru vardır ve her doğru 2 puandır.</p><input id="r" type="range" min="0" max="50" value="35" oninput="sc()" style="width:100%"><div class="out" id="so"></div></div><div class="card"><h3>Hangi ehliyeti alabilirim?</h3><input id="by" class="inp" type="number" inputmode="numeric" placeholder="Doğum yılın, örn. 2005" oninput="ag()" style="margin-top:8px"><div class="out" id="ao"></div></div>';sc();
+}
+function sc(){var c=+$("#r").value,p=c*2;$("#so").innerHTML=c+' doğru = <span class="'+(p>=70?'pass':'fail')+'">'+p+' puan, '+(p>=70?'geçtin':'kaldın, '+(35-c)+' doğru daha gerekli')+'</span>'}
+function ag(){var y=+$("#by").value,a=new Date().getFullYear()-y,o=$("#ao");if(!y||y<1940||a<0){o.textContent="";return}
+ o.textContent=a<16?"Yaşın "+a+". En erken 16 yaşında M, A1 ve B1 sınıfı alabilirsin.":a<18?"Yaşın "+a+". M, A1 ve B1 sınıfı için başvurabilirsin.":a<20?"Yaşın "+a+". B ve A2 sınıfı için başvurabilirsin.":a<24?"Yaşın "+a+". B ve A2 alabilirsin; 2 yıl A2 deneyimiyle A sınıfına geçebilirsin.":"Yaşın "+a+". B, A2 ve doğrudan A sınıfı için başvurabilirsin. Güncel şartları kontrol et.";}
+function mist(){
+ if(!S.m.length){V.innerHTML='<div class="card"><h3>Hata defterin boş</h3><p>Yanlış yaptığın sorular burada toplanır. Doğru cevapladıkça listeden çıkar.</p></div>';return}
+ var h='<button class="go" onclick="start(\'mist\')">Hepsini tekrar çöz ('+S.m.length+')</button><h3 class="sh">Yanlış yaptıkların</h3>';
+ S.m.forEach(function(id){var q=Q[id];if(q)h+='<div class="ri"><small>'+CATS[q[0]][0]+'</small>'+q[1]+'<small class="g">Doğru: '+q[2][q[3]]+'</small><small>'+q[4]+'</small></div>'});V.innerHTML=h;
+}
+go("home");
+</script>
+</body>
+</html>
